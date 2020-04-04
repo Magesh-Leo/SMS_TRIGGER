@@ -1,0 +1,46 @@
+from Log.sign_up import Db
+
+import datetime
+import uuid
+
+import pymysql
+
+
+class Login:
+    def aa(self):
+        obj=Db()
+        self.i = input("enter the EmailId ")
+        self.p = input("enter the Registered password")
+        self.z=obj.select(x=self.i, y=self.p)
+
+    def __init__(self):
+        self.id = uuid.uuid4()
+        self.created_at = datetime.datetime.now()
+        print(self.id)
+        print(self.created_at)
+
+    def log(self):
+        self.db = pymysql.connect('localhost', 'root', '', 'user_reg')
+        self.x = self.db.cursor()
+        self.x.execute('USE user_reg')
+        try:
+            self.x.execute(
+                "CREATE TABLE sign_in(Id varchar(125),Reference_id varchar(30),created_at varchar(30), FOREIGN KEY (Reference_id) REFERENCES signup(Id))")
+        except:
+            print("table already exist")
+
+    def inse(self):
+        print(self.z)
+        self.x.execute("INSERT into sign_in(Id,Reference_id,created_at)Values('%s', '%s','%s')" % (
+            self.id, self.z[0], self.created_at))
+        self.db.commit()
+        self.x.execute("select * from sign_in")
+        a = self.x.fetchall()
+        print(a)
+        self.db.close()
+
+
+obj = Login()
+obj.aa()
+obj.log()
+obj.inse()
