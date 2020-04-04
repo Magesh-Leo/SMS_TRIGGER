@@ -1,0 +1,92 @@
+import re
+import math
+
+
+class validation:
+    def Phone(self):
+        while True:
+            phonenumber = input("enter the Mobile number")
+            regex = "[0/91]?[7-9][0-9]{9}"
+            if re.match(regex, string=phonenumber):
+                return phonenumber
+                break
+            else:
+                print("Invalid phone number")
+                continue
+
+    def Email(self):
+
+        while True:
+            gmail = input("enter the email")
+            regex = "^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            if (re.match(regex, string=gmail)):
+                return gmail
+                break
+            else:
+                print("Invalid Email")
+                continue
+
+    def password(selfself):
+        while True:
+            """uppercaseletters: A - Z
+            lowercaseletters: a - z
+            numbers: 0 - 9
+            anyofthespecialcharacters:  @  # $%^&+="""
+            password = input("Enter The password: ")
+            pattern = "^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$"
+            if (re.findall(pattern, string=password)):
+                return password
+                break
+            else:
+                print("invalid password,Must use cape case,lowercase,numberspecial charcter and have atleast 8 letters")
+                continue
+
+    def username(self):
+        while True:
+            Name = input("enter the UserName")
+            regex = "\w"
+            if (re.match(regex, string=Name)):
+                return Name
+                break
+            else:
+                print("Invalid username")
+                continue
+
+    def id(self):
+        while True:
+            id = input("enter the UserId")
+            regex = "\d"
+            if (re.match(regex, string=id)):
+                return id
+                break
+            else:
+                print("Invalid username")
+                continue
+
+    def msg_file(self,req:str):
+        dic = {}
+        print("1. Yes")
+        print("2. No")
+        choice = int(input("Enter you choice above we given: "))
+        count = int(input("Enter the count of message:"))
+        n = 0
+        if choice == 1:
+            while n < count:
+                product = input("Enter the item: ")
+                dic[product] = input("Enter your price: ")
+                n += 1
+            print(dic)
+            find_one = input('Enter printing value:')
+            self.req = dic.get(find_one)
+            print(req)
+        elif choice == 2:
+            print("Thanks for coming")
+        else:
+            print("Invalid input")
+        file = open('messages.txt', 'a')
+        file.write(f'{dic}')
+
+    def credit(self,credit:int):
+        c = len(self.req) / 160
+        self.credit = math.ceil(c)
+        print(credit)
