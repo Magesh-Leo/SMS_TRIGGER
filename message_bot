@@ -1,0 +1,82 @@
+import datetime
+import pymysql
+import math
+
+from Validation.validation import validation
+
+
+class Msg_bot:
+
+    def __init__(self):
+        self.db = pymysql.connect('localhost', 'root', '', 'user_reg')
+        self.x = self.db.cursor()
+        self.x.execute("USE user_reg")
+        self.send_time = datetime.datetime.now()
+        dic = {}
+        print("1. Yes")
+        print("2. No")
+        choice = int(input("Enter you choice above we given: "))
+        count = int(input("Enter the count of message:"))
+        n = 0
+        if choice == 1:
+            while n < count:
+                product = input("Enter the item: ")
+                dic[product] = input("Enter your value: ")
+                n += 1
+            print(dic)
+            find_one = input('Enter printing value:')
+            self.req = dic.get(find_one)
+        elif choice == 2:
+            print("Thanks for coming")
+        else:
+            print("Invalid input")
+
+        file = open('messages.txt', 'a')
+        file.write(f'\n{dic}')
+
+    def create(self):
+        self.obj1=validation()
+        self.id=self.obj1.id()
+        c = len(self.req)/160
+        self.limitation = math.ceil(c)
+        try:
+            self.x.execute(
+                "CREATE TABLE Trigger(Reference_id varchar(30),Message varchar(300),credits varchar(200),msg_send_time varchar(150), FOREIGN KEY (Reference_id) REFERENCES sign_up(Id))")
+        except Exception as e:
+            print(f"error is occurred {e}")
+
+    def insert(self):
+        self.x.execute("INSERT into Trigger(Reference_id,Message,credits,msg_send_time)Values('%s','%s','%s','%s')" % (
+            self.id, self.req, self.limitation, self.send_time))
+        self.db.commit()
+'''
+    def msg_file(self):
+        dic = {}
+        print("1. Yes")
+        print("2. No")
+        choice = int(input("Enter you choice above we given: "))
+        count = int(input("Enter the count of message:"))
+        n = 0
+        if choice == 1:
+            while n < count:
+                product = input("Enter the item: ")
+                dic[product] = input("Enter your price: ")
+                n += 1
+            print(dic)
+            find_one = input('Enter printing value:')
+            req = dic.get(find_one)
+            print(req)
+            c = len(req) / 160
+            credit = math.ceil(c)
+            print(credit)
+        elif choice == 2:
+            print("Thanks for coming")
+        else:
+            print("Invalid input")
+
+        file = open('messages.txt', 'a')
+        file.write(f'{dic}')
+        '''
+obj=Msg_bot()
+obj.create()
+obj.insert()
